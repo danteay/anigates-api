@@ -4,7 +4,7 @@
   "description": "API for Anigates site services",
   "main": "server.js",
   "scripts": {
-    "start": "NODE_ENV=production node -r esm .",
+    "start": "node -r esm .",
     "dev": "eval $(cat .env) nodemon -r esm",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
