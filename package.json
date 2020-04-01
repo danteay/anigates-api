@@ -1,0 +1,39 @@
+{
+  "name": "anigates-api",
+  "version": "1.0.0",
+  "description": "API for Anigates site services",
+  "main": "server.js",
+  "scripts": {
+    "start": "NODE_ENV=production node -r esm .",
+    "dev": "eval $(cat .env) nodemon -r esm",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/danteay/anigates-api"
+  },
+  "keywords": [
+    "anigates",
+    "graphql",
+    "api"
+  ],
+  "author": "Eduardo Aguilar <dante.aguilar41@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server-express": "^2.11.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "connect-redis": "^4.0.4",
+    "esm": "^3.2.25",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "joi": "^14.3.1",
+    "mongoose": "^5.9.7",
+    "redis": "^3.0.2"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "nodemon": "^2.0.2",
+    "prettier": "^2.0.2"
+  }
+}
