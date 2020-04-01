@@ -2,7 +2,9 @@ export const {
   PORT,
   NODE_ENV,
   MONGODB_URI,
-  REDISCLOUD_URL
+  REDISCLOUD_URL,
+  SESS_NAME,
+  SESS_SECRET,
 } = process.env;
 
 export const sessionConf = {
@@ -11,7 +13,7 @@ export const sessionConf = {
   resave: false,
   saveUninitialized: false,
   cookie: {
-    mageAge: process.env.SESS_LIFETIME || 100 * 60 * 60 * 2,
+    maxAge: process.env.SESS_LIFETIME || 100 * 60 * 60 * 2,
     sameSite: true,
     secure: process.env.NODE_ENV === "production"
   }

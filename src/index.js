@@ -24,7 +24,11 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   tracing: NODE_ENV === 'development',
-  playground: NODE_ENV !== 'production',
+  playground: NODE_ENV === 'production' ? false : {
+    settings: {
+      'request.credentials': 'include',
+    },
+  },
   context: ({req, res}) => ({req, res}),
 });
 
