@@ -8,7 +8,8 @@ import resolvers from './resolvers';
 import mongo from './data/clients/mongo';
 import redis from './data/clients/redis';
 
-import { PORT, NODE_ENV, sessionConf } from './config';
+import { sessionConf } from './config';
+import { PORT, NODE_ENV } from './env';
 
 const db = mongo();
 

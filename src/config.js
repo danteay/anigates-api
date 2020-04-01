@@ -1,20 +1,14 @@
-export const {
-  PORT,
-  NODE_ENV,
-  MONGODB_URI,
-  REDISCLOUD_URL,
-  SESS_NAME,
-  SESS_SECRET,
-} = process.env;
+import { NODE_ENV, SESS_NAME, SESS_SECRET, SESS_LIFETIME } from './env';
+import { isEmpty } from './utils/validations';
 
 export const sessionConf = {
-  name: process.env.SESS_NAME,
-  secret: process.env.SESS_SECRET,
+  name: SESS_NAME,
+  secret: SESS_SECRET,
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: process.env.SESS_LIFETIME || 100 * 60 * 60 * 2,
+    maxAge: !isEmpty(SESS_LIFETIME) ? parseInt(SESS_LIFETIME) : 100 * 60 * 60 * 2,
     sameSite: true,
-    secure: process.env.NODE_ENV === "production"
+    secure: NODE_ENV === "production"
   }
 };

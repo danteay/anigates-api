@@ -1,6 +1,6 @@
 import { AuthenticationError } from 'apollo-server-express';
 import { User } from './../data/models';
-import { SESS_NAME } from './../config';
+import { SESS_NAME } from './../env';
 import { compare } from 'bcryptjs';
 
 export const authUser = async (email, password) => {
