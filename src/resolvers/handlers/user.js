@@ -36,7 +36,6 @@ const Mutation = {
     await Joi.validate(args, singUp, { abortEarly: false });
 
     const user = await User.create(args);
-
     req.session.userId = user.id;
 
     return user;

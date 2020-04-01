@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { hash, compare } from "bcryptjs";
+import { hash } from "bcryptjs";
 
 const schema = new mongoose.Schema(
   {
@@ -33,9 +33,5 @@ schema.pre("save", async function (next) {
     this.password = await hash(this.password, 10);
   }
 });
-
-schema.methods.comparePassword = function(password) {
-  return compare(password, this.password);
-};
 
 export default mongoose.model("User", schema);
