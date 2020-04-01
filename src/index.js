@@ -3,42 +3,28 @@ import express from 'express';
 import session from 'express-session';
 import connectRedis from 'connect-redis';
 
-import typeDefs from './typeDefs';
-import resolvers from './resolvers';
 import mongo from './data/clients/mongo';
 import redis from './data/clients/redis';
 
-import { sessionConf } from './config';
+import { sessionConf, apolloConf } from './config';
 import { PORT, NODE_ENV } from './env';
 
-const db = mongo();
+mongo();
 
 const app = express();
-app.disable("x-powered-by");
+app.disable('x-powered-by');
 
 const RedisStore = connectRedis(session);
-const store = new RedisStore({client: redis()});
+const store = new RedisStore({ client: redis() });
 
-app.use(session({store, ...sessionConf}));
+app.use(session({ store, ...sessionConf }));
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  tracing: NODE_ENV === 'development',
-  playground: NODE_ENV === 'production' ? false : {
-    settings: {
-      'request.credentials': 'include',
-    },
-  },
-  context: ({req, res}) => ({req, res}),
-});
+const server = new ApolloServer(apolloConf);
 
 server.applyMiddleware({ app });
 
 app.listen({ port: PORT }, () => {
-  if (NODE_ENV === "development") {
-    console.log(
-      `Server started at: http://localhost:${PORT}${server.graphqlPath}`
-    );
+  if (NODE_ENV === 'development') {
+    console.log(`Server started at: http://localhost:${PORT}${server.graphqlPath}`);
   }
 });

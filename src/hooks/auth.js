@@ -6,9 +6,13 @@ import { compare } from 'bcryptjs';
 export const authUser = async (email, password) => {
   const user = User.findOne({email: email});
 
+  console.log(user);
+
   if (!user) {
     throw new AuthenticationError('Not found user');
   }
+
+  console.log(password, user.name)
 
   if (!await compare(password, user.password)) {
     throw new AuthenticationError('Invalid password');

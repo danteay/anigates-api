@@ -3,19 +3,16 @@ import { Types } from 'mongoose';
 import { UserInputError } from 'apollo-server-express';
 import { User } from './../../data/models';
 import { singUp, singIn } from './../../data/schemas';
-import { isAuthenticated, isNotAuthenticated, authUser, singOut } from './../../hooks/auth';
+import { authUser, singOut } from './../../hooks/auth';
 
 const Query = {
   // TODO: is_auth, projection, pagination, sanitization
 
   me: (root, args, { req }, info) => {
-    isAuthenticated(req);
     return User.findById(req.session.userId);
   },
 
   user: (root, args, { req }, info) => {
-    isAuthenticated(req);
-
     if (Types.ObjectId.isValid(args.id)) {
       throw new UserInputError('Invalid user data');
     }
@@ -24,15 +21,12 @@ const Query = {
   },
 
   users: (root, args, { req }, info) => {
-    isAuthenticated(req);
     return User.find({});
   },
 };
 
 const Mutation = {
   singUp: async (root, args, {req}, info) => {
-    isNotAuthenticated(req);
-
     await Joi.validate(args, singUp, { abortEarly: false });
 
     const user = await User.create(args);
@@ -42,12 +36,6 @@ const Mutation = {
   },
 
   singIn: async (root, args, { req }, info) => {
-    const { userId } = req.session;
-
-    if (userId) {
-      return User.findById(userId);
-    }
-
     await Joi.validate(args, singIn, { abortEarly: false });
 
     const { email, password } = args;
@@ -59,7 +47,6 @@ const Mutation = {
   },
 
   singOut: (root, args, { req, res }, info) => {
-    isNotAuthenticated(req);
     return singOut(req, res)
   },
 };

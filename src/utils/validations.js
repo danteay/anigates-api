@@ -1,4 +1,3 @@
-
 export const isEmpty = (value) => {
   switch (value) {
     case '':
