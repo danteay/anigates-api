@@ -8,7 +8,8 @@ import schemaDirectives from './directives';
 export const sessionConf = {
   name: SESS_NAME,
   secret: SESS_SECRET,
-  resave: false,
+  resave: true,
+  rolling: true,
   saveUninitialized: false,
   cookie: {
     maxAge: !isEmpty(SESS_LIFETIME) ? parseInt(SESS_LIFETIME) : 100 * 60 * 60 * 2,

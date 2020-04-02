@@ -24,8 +24,8 @@ const schema = new mongoose.Schema(
   },
   {
     // Make Mongoose use Unix time (seconds since Jan 1, 1970)
-    timestamps: { currentTime: () => Math.floor(Date.now() / 1000) }
-  }
+    timestamps: { currentTime: () => Math.floor(Date.now() / 1000) },
+  },
 );
 
 schema.pre("save", async function (next) {
