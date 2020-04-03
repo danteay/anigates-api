@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { hash } from "bcryptjs";
 
-const schema = new mongoose.Schema(
+const schema = new Schema(
   {
     email: {
       type: String,
@@ -20,7 +20,11 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true
-    }
+    },
+    series: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Serie',
+    }],
   },
   {
     // Make Mongoose use Unix time (seconds since Jan 1, 1970)

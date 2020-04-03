@@ -1,4 +1,3 @@
-import Joi from 'joi';
 import { Types } from 'mongoose';
 import { UserInputError } from 'apollo-server-express';
 import { User } from './../../data/models';
@@ -13,7 +12,7 @@ const Query = {
   },
 
   user: (root, args, { req }, info) => {
-    if (Types.ObjectId.isValid(args.id)) {
+    if (!Types.ObjectId.isValid(args.id)) {
       throw new UserInputError('Invalid user data');
     }
 
@@ -27,7 +26,7 @@ const Query = {
 
 const Mutation = {
   singUp: async (root, args, {req}, info) => {
-    await Joi.validate(args, singUp, { abortEarly: false });
+    await singUp.validateAsync(args)
 
     const user = await User.create(args);
     req.session.userId = user.id;
@@ -36,7 +35,7 @@ const Mutation = {
   },
 
   singIn: async (root, args, { req }, info) => {
-    await Joi.validate(args, singIn, { abortEarly: false });
+    await singIn.validateAsync(args);
 
     const { email, password } = args;
     const user = await authUser(email, password);

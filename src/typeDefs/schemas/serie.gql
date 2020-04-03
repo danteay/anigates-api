@@ -1,0 +1,45 @@
+type Serie {
+  id: ID!
+  name: String!
+  slug: String!
+  url: String
+  image: String
+  episodes: Int!
+  duration: Int!
+  type: String!
+  score: Int!
+  categories: [String!]!
+  createdAt: String!
+}
+
+extend type Query {
+  serie(id: ID!): Serie! @auth
+  series: [Serie!]! @auth
+}
+
+extend type Mutation {
+  createSerie(
+    name: String!
+    url: String
+    image: String
+    episodes: Int!
+    duration: Int!
+    type: String!
+    score: Int!
+    categories: [String!]!
+  ): Serie @auth
+
+  updateSerie(
+    id: ID!
+    name: String
+    url: String
+    image: String
+    episodes: Int
+    duration: Int
+    type: String
+    score: Int
+    categories: [String!]
+  ): Serie @auth
+
+  deleteSerie(id: ID!): Boolean @auth
+}
